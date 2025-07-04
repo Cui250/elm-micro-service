@@ -8,7 +8,7 @@
     <ul class="addresslist">
       <li v-for="item in deliveryAddressArr">
         <div class="addresslist-left" @click="setDeliveryAddress(item)">
-          <h3>{{item.contactName}}{{item.contactSex | sexFilter}} {{item.contactTel}}
+          <h3>{{item.contactName}}{{formatSex(item.contactSex)}} {{item.contactTel}}
           </h3>
           <p>{{item.address}}</p>
         </div>
@@ -47,12 +47,11 @@ export default{
   components:{
     Footer
   },
-  filters:{
-    sexFilter(value){
-      return value==1?'先生':'女士';
-    }
-  },
+
   methods:{
+    formatSex(value) {
+      return value == 1 ? '先生' : '女士';
+    },
     listDeliveryAddressByUserId(){
       //查询送货地址
 

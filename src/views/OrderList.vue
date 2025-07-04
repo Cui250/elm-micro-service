@@ -7,9 +7,9 @@
     <!-- 订单列表部分 -->
     <h3>未支付订单信息：</h3>
     <ul class="order">
-      <li v-for="item in orderArr" v-if="item.orderState==0">
+      <li v-for="item in unpaidOrders" :key="item.orderId">
         <div class="order-info">
-          <p>
+        <p>
             {{item.business.businessName}}
             <i class="fa fa-caret-down" @click="detailetShow(item)"></i>
           </p>
@@ -32,7 +32,7 @@
     </ul>
     <h3>已支付订单信息：</h3>
     <ul class="order">
-      <li v-for="item in orderArr" v-if="item.orderState==1">
+      <li v-for="item in paidOrders" :key="item.orderId">
         <div class="order-info">
           <p>
             {{item.business.businessName}}
@@ -76,7 +76,6 @@ export default{
       userId:this.user.userId
     })).then(response=>{
       let result = response.data;
-      console.log(response)
       for(let orders of result){
         orders.isShowDetailet = false;
       }
@@ -84,6 +83,14 @@ export default{
     }).catch(error=>{
       console.error(error);
     });
+  },
+  computed: {
+    unpaidOrders() {
+      return this.orderArr.filter(item => item?.orderState === 0);
+    },
+    paidOrders() {
+      return this.orderArr.filter(item => item?.orderState === 1);
+    }
   },
   methods:{
     detailetShow(orders){
