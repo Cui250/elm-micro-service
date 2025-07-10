@@ -21,12 +21,10 @@ public class UserController {
     private UserService userService;
 
 
-
     @PostMapping("/getUserByIdByPass")
     public User getUserByIdByPass(@RequestBody User user) {
         return userService.getUserByIdByPass(user);
-
-    }
+            }
 
     @GetMapping("/getUserById/{userId}")
     public int getUserById(@PathVariable String userId) {
