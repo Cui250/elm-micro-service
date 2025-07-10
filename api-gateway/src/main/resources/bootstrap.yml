@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: SpringCloudGateway
+  cloud:
+    nacos:
+      #服务注册与发现
+      discovery:
+        server-addr: http://127.0.0.1:8848
+        group: DEFAULT_GROUP #默认分组
+      #        username: #nacos用户名
+      #        password: #nacos密码
+      #服务配置中心
+      config:
+        server-addr: http://127.0.0.1:8848 # Nacos服务端地址
+        group: DEFAULT_GROUP #默认分组
+        file-extension: yml #配置文件后缀名
+        refresh-enabled: true #开启自动刷新配置
+      #        prefix: #配置文件前缀
+      #        username: #nacos用户名
+      #        password: #nacos密码
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启服务发现路由功能，这样 Spring Cloud Gateway 就能依据服务注册中心（这里是 Nacos）里的服务信息自动创建路由规则
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user/**, /address/**
+        - id: business-service
+          uri: lb://business-service
+          predicates:
+            - Path=/business/**, /food/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**, /cart/**
+#      routes:
+#        - id: springCloudNacos #路由的唯一标识，一般用${spring.application.name}
+#          uri: lb://springCloudNacos #目标服务地址，lb://springCloudNacos 里的 lb 代表负载均衡，springCloudNacos 是在 Nacos 注册的服务名，意味着请求会被路由到名为 springCloudNacos 的服务
+#          predicates:
+#            - Path=/test/** #路由断言，也就是路由匹配规则。Path=/test/** 表明当请求路径以 /test/ 开头时，该路由规则就会生效
