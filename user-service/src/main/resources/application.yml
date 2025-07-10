@@ -31,6 +31,3 @@ logging:
     org.apache.ibatis: DEBUG
 debug: true
 
-jwt:
-  secret: y8GMepxPjRQ2vD+GjZZmPwfvMqlxeGwK/b9lqvWGtoR+z1p85a1Y2zkFtdMpvyS40hUauzTvJiE6Hs4dEAheaw==
-  expiration: 86400  # 24小时

@@ -13,7 +13,6 @@
         <module>business-service</module>
         <module>order-service</module>
         <module>api-gateway</module>
-        <module>common-module</module>
     </modules>
 
     <properties>
