@@ -1,0 +1,36 @@
+server:
+  port: 8085 # 指定服务端口，如果不指定默认就是8080
+#  servlet:
+#    context-path: /elm
+
+spring:
+  application:
+    name: user-service # 指定服务名称，项目启动后注册到nacos的名称就是这个
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/user_service?useSSL=false
+    username: "root"
+    hikari:
+      maximum-pool-size: 30
+      minimum-idle: 5
+      password: "ABSESP040113"
+
+
+
+
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: ynu.edu.user_service.po
+
+logging:
+  level:
+    com.baomidou: DEBUG
+    org.apache.ibatis: DEBUG
+debug: true
+
+jwt:
+  secret: y8GMepxPjRQ2vD+GjZZmPwfvMqlxeGwK/b9lqvWGtoR+z1p85a1Y2zkFtdMpvyS40hUauzTvJiE6Hs4dEAheaw==
+  expiration: 86400  # 24小时
