@@ -1,4 +1,4 @@
-package ynu.edu.user_service.util;
+package ynu.edu.user_service.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
