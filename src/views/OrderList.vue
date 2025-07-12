@@ -10,7 +10,7 @@
       <li v-for="item in unpaidOrders" :key="item.orderId">
         <div class="order-info">
         <p>
-            {{item.business.businessName}}
+            {{item.businessName}}
             <i class="fa fa-caret-down" @click="detailetShow(item)"></i>
           </p>
           <div class="order-info-right">
@@ -20,12 +20,12 @@
         </div>
         <ul class="order-detailet" v-show="item.isShowDetailet">
           <li v-for="odItem in item.list">
-            <p>{{odItem.food.foodName}} x {{odItem.quantity}}</p>
-            <p>&#165;{{odItem.food.foodPrice*odItem.quantity}}</p>
+            <p>{{odItem.foodName}} x {{odItem.quantity}}</p>
+            <p>&#165;{{odItem.foodPrice*odItem.quantity}}</p>
           </li>
           <li>
             <p>配送费</p>
-            <p>&#165;{{item.business.deliveryPrice}}</p>
+            <p>&#165;{{item.deliveryPrice}}</p>
           </li>
         </ul>
       </li>
@@ -72,7 +72,7 @@ export default{
   created() {
     this.user = this.$getSessionStorage('user');
 
-    this.$axios.post('OrdersController/listOrdersByUserId',this.$qs.stringify({
+    this.$axios.post('order/listOrdersByUserId',this.$qs.stringify({
       userId:this.user.userId
     })).then(response=>{
       let result = response.data;

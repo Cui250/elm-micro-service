@@ -18,10 +18,10 @@
     <ul class="order-detailed">
       <li v-for="item in cartArr">
         <div class="order-detailed-left">
-          <img :src="item.food.foodImg">
-          <p>{{item.food.foodName}} x {{item.quantity}}</p>
+          <img :src="item.foodImg">
+          <p>{{item.foodName}} x {{item.quantity}}</p>
         </div>
-        <p>&#165;{{item.food.foodPrice*item.quantity}}</p>
+        <p>&#165;{{item.foodPrice*item.quantity}}</p>
       </li>
     </ul>
     <div class="order-deliveryfee">
@@ -56,19 +56,18 @@ export default{
     this.deliveryaddress = this.$getLocalStorage(this.user.userId);
 
     //查询当前商家
-    this.$axios.post('BusinessController/getBusinessById',this.$qs.stringify({
-      businessId:this.businessId
-    })).then(response=>{
+    this.$axios.get(`business/getById/${this.businessId}`).then(response=>{
       this.business = response.data;
     }).catch(error=>{
       console.error(error);
     });
 
     //查询当前用户在购物车中的当前商家食品列表
-    this.$axios.post('CartController/listCart',this.$qs.stringify({
+    this.$axios.post('cart/listCart',this.$qs.stringify({
       userId:this.user.userId,
       businessId:this.businessId
     })).then(response=>{
+      console.log(response.data);
       this.cartArr = response.data;
     }).catch(error=>{
       console.error(error);
@@ -78,7 +77,7 @@ export default{
     totalPrice(){
       let totalPrice = 0;
       for(let cartItem of this.cartArr){
-        totalPrice += cartItem.food.foodPrice*cartItem.quantity;
+        totalPrice += cartItem.foodPrice*cartItem.quantity;
       }
       totalPrice += this.business.deliveryPrice;
       return totalPrice;
@@ -99,7 +98,7 @@ export default{
       }
 
       //创建订单
-      this.$axios.post('OrdersController/createOrders',this.$qs.stringify({
+      this.$axios.post('order/createOrders',this.$qs.stringify({
         userId:this.user.userId,
         businessId:this.businessId,
         daId:this.deliveryaddress.daId,

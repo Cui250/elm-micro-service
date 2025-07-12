@@ -8,7 +8,7 @@
     <h3>订单信息：</h3>
     <div class="order-info">
       <p>
-        {{orders.business.businessName}}
+        {{orders.businessName}}
         <i class="fa fa-caret-down" @click="detailetShow"></i>
       </p>
       <p>&#165;{{orders.orderTotal}}</p>
@@ -16,12 +16,12 @@
     <!-- 订单明细部分 -->
     <ul class="order-detailet" v-show="isShowDetailet">
       <li v-for="item in orders.list">
-        <p>{{item.food.foodName}} x {{item.quantity}}</p>
-        <p>&#165;{{item.food.foodPrice*item.quantity}}</p>
+        <p>{{item.foodName}} x {{item.quantity}}</p>
+        <p>&#165;{{item.foodPrice*item.quantity}}</p>
       </li>
       <li>
         <p>配送费</p>
-        <p>&#165;{{orders.business.deliveryPrice}}</p>
+        <p>&#165;{{orders.deliveryPrice}}</p>
       </li>
     </ul>
     <!-- 支付方式部分 -->
@@ -49,16 +49,16 @@ export default {
     return {
       orderId:this.$route.query.orderId,
       orders:{
-        business:{}
       },
       isShowDetailet:false
     }
   },
   created() {
-    this.$axios.post('OrdersController/getOrdersById',this.$qs.stringify({
+    this.$axios.post('order/getOrdersById',this.$qs.stringify({
       orderId:this.orderId
     })).then(response=>{
       this.orders = response.data;
+      console.log(response.data)
     }).catch(error=>{
       console.error(error);
     });

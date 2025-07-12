@@ -77,17 +77,13 @@ export default {
   created() {
     this.user = this.$getSessionStorage('user');
     //根据businessId查询商家信息
-    this.$axios.post('BusinessController/getBusinessById', this.$qs.stringify({
-      businessId: this.businessId
-    })).then(response => {
+    this.$axios.get(`business/getById/${this.businessId}`).then(response => {
       this.business = response.data;
     }).catch(error => {
       console.error(error);
     });
     //根据businessId查询所属食品信息
-    this.$axios.post('FoodController/listFoodByBusinessId', this.$qs.stringify({
-      businessId: this.businessId
-    })).then(response => {
+    this.$axios.get(`food/listByBusiness/${this.businessId}`).then(response => {
       this.foodArr = response.data;
       for (let i = 0; i < this.foodArr.length; i++) {
         this.foodArr[i].quantity = 0;
@@ -102,7 +98,7 @@ export default {
   },
   methods: {
     listCart() {
-      this.$axios.post('CartController/listCart', this.$qs.stringify({
+      this.$axios.post('cart/listCart', this.$qs.stringify({
         businessId: this.businessId,
         userId: this.user.userId
       })).then(response => {
@@ -154,7 +150,7 @@ export default {
       }
     },
     savaCart(index) {
-      this.$axios.post('CartController/saveCart', this.$qs.stringify({
+      this.$axios.post('cart/saveCart', this.$qs.stringify({
         businessId: this.businessId,
         userId: this.user.userId,
         foodId: this.foodArr[index].foodId
@@ -171,7 +167,7 @@ export default {
       });
     },
     updateCart(index, num) {
-      this.$axios.post('CartController/updateCart', this.$qs.stringify({
+      this.$axios.post('cart/updateCart', this.$qs.stringify({
         businessId: this.businessId,
         userId: this.user.userId,
         foodId: this.foodArr[index].foodId,
@@ -189,7 +185,7 @@ export default {
       });
     },
     removeCart(index) {
-      this.$axios.post('CartController/removeCart', this.$qs.stringify({
+      this.$axios.post('cart/removeCart', this.$qs.stringify({
         businessId: this.businessId,
         userId: this.user.userId,
         foodId: this.foodArr[index].foodId

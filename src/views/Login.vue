@@ -56,18 +56,20 @@ export default{
       }
 
       //登录请求
-      this.$axios.post('UserController/getUserByIdByPass',this.$qs.stringify({
+      this.$axios.post('user/getUserByIdByPass',{
         userId:this.userId,
         password:this.password
-      })).then(response=>{
-        let user = response.data;
+      }).then(response=>{
+        console.log(response.data)
+        let user = response.data.user;
         if(user==null||user==''){
           alert('用户名或密码不正确！');
         }else{
           //sessionstorage有容量限制，为了防止数据溢出，所以不将userImg数据放入session
           user.userImg = '';
+          this.$setSessionStorage('token',response.data.token);
           this.$setSessionStorage('user',user);
-          this.$router.go(-1);
+          this.$router.push('/index');
         }
       }).catch(error=>{
         console.error(error);

@@ -87,10 +87,9 @@ export default {
         return;
       }
       this.deliveryAddress.userId = this.user.userId;
-      this.$axios.post('DeliveryAddressController/saveDeliveryAddress',
-          this.$qs.stringify(
+      this.$axios.post('address/save',
               this.deliveryAddress
-          )).then(response => {
+          ).then(response => {
         if(response.data>0){
           this.$router.push({path:'/userAddress',query:
                 {businessId:this.businessId}});

@@ -18,7 +18,28 @@ import {
 const app = createApp(App);
 
 // 设置 axios 的基础 URL
-axios.defaults.baseURL = 'http://localhost:8080/elm/';
+axios.defaults.baseURL = 'http://localhost:8079/';
+
+// 设置 Axios 请求拦截器
+axios.interceptors.request.use(
+    config => {
+        // 从 sessionStorage 中获取 user 信息
+        let token = sessionStorage.getItem('token');
+
+        if (token) {
+            // 去除首尾的引号
+            token = token.replace(/^"(.*)"$/, '$1');
+            // console.log("成功添加请求头token：" + token);
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    error => {
+        // 对请求错误做些什么
+        return Promise.reject(error);
+    }
+);
+
 
 // 将 axios 和 qs 以及其他工具函数挂载到 app.config.globalProperties 上
 app.config.globalProperties.$axios = axios;

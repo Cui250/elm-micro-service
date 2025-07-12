@@ -39,9 +39,8 @@ export default{
     this.user = this.$getSessionStorage('user');
 
     //根据orderTypeId查询商家信息
-    this.$axios.post('BusinessController/listBusinessByOrderTypeId',this.$qs.stringify({
-      orderTypeId:this.orderTypeId
-    })).then(response=>{
+    this.$axios.get(`business/listByOrderType/${this.orderTypeId}`
+    ).then(response=>{
       this.businessArr = response.data;
       //判断是否登录
       if(this.user!=null){
@@ -56,7 +55,7 @@ export default{
   },
   methods:{
     listCart(){
-      this.$axios.post('CartController/listCart',this.$qs.stringify({
+      this.$axios.post('cart/listCart',this.$qs.stringify({
         userId:this.user.userId
       })).then(response=>{
         let cartArr = response.data;

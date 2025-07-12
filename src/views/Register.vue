@@ -75,9 +75,8 @@ export default {
   },
   methods: {
     checkUserId(){
-      this.$axios.post('UserController/getUserById', this.$qs.stringify({
-        userId: this.user.userId,
-      })).then(response => {
+      this.$axios.get(`user/getUserById/${this.user.userId}`)
+          .then(response => {
         if(response.data==1){
           this.user.userId = '';
           alert('此手机号码已存在！')
@@ -104,9 +103,9 @@ export default {
         return;
       }
       //注册请求
-      this.$axios.post('UserController/saveUser', this.$qs.stringify(
+      this.$axios.post('user/saveUser',
           this.user
-      )).then(response => {
+      ).then(response => {
         if(response.data>0){
           alert('注册成功！');
           this.$router.go(-1);
